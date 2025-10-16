@@ -12,24 +12,22 @@ LilWill::LilWill()
       is_set_for_start(false) {}
 
 void LilWill::toggle() {
+  if (!is_set_for_start) {
+    set_start();
+    return;
+  }
   will_pneumatic.toggle();
   hood_pneumatic.toggle();
 }
 
 void LilWill::set_start() {
-  if (is_set_for_start) {
-    return;
-  }
-
   will_pneumatic.set_value(false);
   hood_pneumatic.set_value(true);
   is_set_for_start = true;
 }
 
 void LilWill::run() {
-  if (controller.get_digital(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
+  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
     toggle();
-  } else if (controller.get_digital(CONTROLLER_BUTTONS::LIL_WILL::START)) {
-    set_start();
   }
- }
+}

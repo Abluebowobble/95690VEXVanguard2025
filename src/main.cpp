@@ -132,12 +132,12 @@ void competition_initialize() {
 void autonomous() {
   // pid tuning
   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-  // chassis.calibrate();
+  chassis.calibrate();
 
-  // chassis.setPose(0, 0, 270);
+  chassis.setPose(0, 0, 270);
 
   // chassis.moveToPoint(10, 0, 5000);
-  // chassis.turnToHeading(90, 5000);
+  chassis.turnToHeading(90, 5000);
 
   // jerry
   // chassis.setPose(0, 0, 0);
@@ -193,48 +193,48 @@ void opcontrol() {
     }
   });
 
-  while (true) {
-    subsystems.endeffector.set_volts(
-        globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
-    subsystems.magazine.set_volts(
-        globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
-
-    pros::delay(20);  // REQUIRED: Allows other tasks (like LCD update) to run
-  }
-
   // while (true) {
-  //   // Drivetrain control
-  //   subsystems.drivetrain.drive();
+  //   subsystems.endeffector.set_volts(
+  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+  //   subsystems.magazine.set_volts(
+  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
 
-  //   // EndEffector control
-  //   subsystems.endeffector.run();
-
-  //   // Magazine control
-  //   subsystems.magazine.run();
-
-  //   // Intake
-  //   subsystems.intake.run();
-
-  //   // lilwill
-  //   subsystems.lilWill.run();
-
-  //   if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-  //     lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-  //     chassis.calibrate();
-
-  //     chassis.setPose(0, 0, 0);
-
-  //     // chassis.moveToPoint(10, 0, 5000);
-  //     chassis.turnToHeading(90, 5000);
-  //   }
-
-  //   if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-  //     lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-  //     chassis.calibrate();
-  //     chassis.setPose(0, 0, 0);
-  //     chassis.follow(isabellasstraightcode_txt, 15, 100000);
-  //   }
-
-  // pros::delay(20);
+  //   pros::delay(20);  
   // }
+
+  while (true) {
+    // Drivetrain control
+    subsystems.drivetrain.drive();
+
+    // EndEffector control
+    subsystems.endeffector.run();
+
+    // Magazine control
+    subsystems.magazine.run();
+
+    // Intake
+    subsystems.intake.run();
+
+    // lilwill
+    subsystems.lilWill.run();
+
+    // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
+    //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+    //   chassis.calibrate();
+
+    //   chassis.setPose(0, 0, 0);
+
+    //   // chassis.moveToPoint(10, 0, 5000);
+    //   chassis.turnToHeading(90, 5000);
+    // }
+
+    // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+    //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+    //   chassis.calibrate();
+    //   chassis.setPose(34, 48, 89.381);
+    //   chassis.follow(isabellasstraightcode_txt, 15, 100000);
+    // }
+
+  pros::delay(20);
+  }
 }

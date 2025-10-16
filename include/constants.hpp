@@ -46,7 +46,7 @@ constexpr double HORIZONTALTRACKING_WHEEL_OFFSET = -3.966;
 namespace OPERATOR_CONSTANTS {
 namespace THROTTLE {
 constexpr int DEADBAND = 3;
-constexpr int MIN = 20;
+constexpr int MIN = 10;
 constexpr double CURVE = 1.019;
 } // namespace THROTTLE
 
@@ -72,11 +72,11 @@ constexpr double SLEW = 0.0;
 } // namespace LATERAL
 
 namespace ANGULAR {
-constexpr double KP = 7.3;
+constexpr double KP = 5;
 constexpr double KI = 0;
-constexpr double KD = 6.5;
+constexpr double KD = 0;
 constexpr double SMALL_ERROR = 0;
-constexpr int SMALL_TIMEOUT = 00;
+constexpr int SMALL_TIMEOUT = 0;
 constexpr double LARGE_ERROR = 0;
 constexpr int LARGE_TIMEOUT = 0;
 constexpr double SLEW = 0;
@@ -85,7 +85,7 @@ constexpr double SLEW = 0;
 
 namespace VISION {
 namespace RED {
-constexpr double UPPER_BOUND = 10;
+constexpr double UPPER_BOUND = 20;
 constexpr double LOWER_BOUND = 350;
 } // namespace RED
 

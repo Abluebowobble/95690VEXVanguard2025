@@ -11,6 +11,6 @@ void Intake::toggle() { intake_pneumatic.toggle(); }
 
 
 void Intake::run() {
-  if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::TOGGLE))
+  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::INTAKE::TOGGLE))
     toggle();
 }

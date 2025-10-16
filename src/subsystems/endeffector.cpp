@@ -51,21 +51,13 @@ bool EndEffector::should_eject_L3() {
          L3_color != globals::alliance;
 }
 
-globals::SensorColors EndEffector::get_L2_color() {
-  return L2_color;
-}
+globals::SensorColors EndEffector::get_L2_color() { return L2_color; }
 
-globals::SensorColors EndEffector::get_L3_color() {
-  return L3_color;
-}
+globals::SensorColors EndEffector::get_L3_color() { return L3_color; }
 
-double EndEffector::get_L2_hue() {
-  return L2_color_sensor.get_hue();
-}
+double EndEffector::get_L2_hue() { return L2_color_sensor.get_hue(); }
 
-double EndEffector::get_L3_hue() {
-  return L3_color_sensor.get_hue();
-}
+double EndEffector::get_L3_hue() { return L3_color_sensor.get_hue(); }
 
 void EndEffector::init() {
   L2_color_sensor.set_led_pwm(100);
@@ -99,6 +91,7 @@ void EndEffector::run() {
   } else {
     eject_bottom = should_eject_L2();
     eject_top = should_eject_L3();
+    manual_control = false;
   }
 
   if (controller.get_digital(CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID) &&

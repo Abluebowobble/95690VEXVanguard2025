@@ -67,12 +67,12 @@ Drivetrain::Drivetrain()
 
       // Horizontal Tracking Wheel - Measures side-to-side (strafe) movement
       horizontalTrackingWheel(&horizontalRotationSensor,           // Pointer to rotation sensor
-                              lemlib::Omniwheel::NEW_2,            // Wheel size: 2" diameter
+                              lemlib::Omniwheel::NEW_275,            // Wheel size: 2" diameter
                               CHASIS_VALUES::HORIZONTALTRACKING_WHEEL_OFFSET), // -3.966" offset from center
 
       // Vertical Tracking Wheel - Measures forward/backward movement
       verticalTrackingWheel(&verticalRotationSensor,              // Pointer to rotation sensor
-                            lemlib::Omniwheel::NEW_2,             // Wheel size: 2" diameter
+                            lemlib::Omniwheel::NEW_275,             // Wheel size: 2" diameter
                             CHASIS_VALUES::LATERALTRACKING_WHEEL_OFFSET), // 0" offset (centered)
       // Lateral PID Controller - For forward/backward autonomous movement
       // Note: Currently all zeros (not yet tuned)
