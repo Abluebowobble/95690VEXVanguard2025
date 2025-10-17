@@ -32,7 +32,7 @@ DriveTrainSubsystem::DriveTrainSubsystem()
                                            // will move out of 127
           OPERATOR_CONSTANTS::STEER::CURVE // expo curve gain
           ),
-      imu1(PORT_VALUES::IMU), imu2(PORT_VALUES::IMU),
+      imu1(PORT_VALUES::IMU_1), imu2(PORT_VALUES::IMU_2),
       horizontalRotationSensor(PORT_VALUES::HORIZONTAL_ROTATION_SENSOR),
       horizontalTrackingWheel(&horizontalRotationSensor,
                               lemlib::Omniwheel::NEW_2,
@@ -70,7 +70,7 @@ DriveTrainSubsystem::DriveTrainSubsystem()
               ),
       drivetrain(&leftMotorGroup,                // left motor group
                  &rightMotorGroup,               // right motor group
-                 CHASIS_VALUES::TRACKWIDTH,      // 12.5 inch track width
+                 12.5,                           // 12.5 inch track width
                  lemlib::Omniwheel::NEW_325,     // using new 4" omnis
                  CHASIS_VALUES::RPM,             // drivetrain rpm is 360
                  CHASIS_VALUES::HORIZONTAL_DRIFT // horizontal drift is 8

@@ -795,8 +795,8 @@ void opcontrol() {
     }
 
     // get joystick positions
-    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int leftY = -controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int rightX = -controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
     robotDriveTrainSubsystem.drive(leftY, rightX);
 
