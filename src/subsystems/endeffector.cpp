@@ -29,7 +29,7 @@ void EndEffector::set_L2_color(void *param) {
   pros::delay(10);
   while (true) {
     L2_color = L2_color_sensor.get_color();
-    pros::delay(100);
+    pros::delay(20);
   }
 }
 
@@ -37,7 +37,7 @@ void EndEffector::set_L3_color(void *param) {
   pros::delay(10);
   while (true) {
     L3_color = L3_color_sensor.get_color();
-    pros::delay(20);
+    pros::delay(50);
   }
 }
 
@@ -60,7 +60,7 @@ double EndEffector::get_L2_hue() { return L2_color_sensor.get_hue(); }
 double EndEffector::get_L3_hue() { return L3_color_sensor.get_hue(); }
 
 void EndEffector::index() {
-  if (L3_color_sensor.get_proximity() > 200) {
+  if (L3_color_sensor.get_proximity() > 100) {
     stop_for_indexing = true;
   }
 
@@ -84,7 +84,10 @@ void EndEffector::score_L3() {
   upper_motor.move(-127);
 }
 
-void EndEffector::score_L2() { set_volts(-127); }
+void EndEffector::score_L2() {
+  upper_motor.move(127);
+  lower_motor.move(-127);
+}
 
 void EndEffector::basket_intake() { set_volts(127); }
 
@@ -113,18 +116,22 @@ void EndEffector::run() {
                  CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_HIGH)) {
     score_L3();
 
-    if (!manual_control && eject_top) {
-      upper_motor.move(127);
-    }
+    // if (!manual_control && eject_top) {
+    //   upper_motor.move(127);
+    //   lower_motor.move(0);
+    // }
   } else if (controller.get_digital(
                  CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID)) {
     score_L2();
 
-    if (!manual_control && eject_bottom) {
-      lower_motor.move(127);
-    }
+    // if (!manual_control && eject_bottom) {
+    //   lower_motor.move(127);
+    // }
   } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE)) {
     index();
+  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
+             controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
+    basket_intake();
   } else {
     // Reset stop flag when button is released
     stop_for_indexing = false;

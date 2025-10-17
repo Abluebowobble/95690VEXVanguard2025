@@ -30,8 +30,8 @@ constexpr int L3_COLOR_SENSOR = 8;
 
 // pneumatics
 constexpr char INTAKE_PNEUMATIC = 'A';
-constexpr char WILL_PNEUMATIC = 'C';
-constexpr char HOOD_PNEUMATIC = 'B';
+constexpr char WILL_PNEUMATIC = 'B';
+constexpr char HOOD_PNEUMATIC = 'C';
 constexpr char WING_PNEUMATIC = 'D';
 
 } // namespace PORT_VALUES

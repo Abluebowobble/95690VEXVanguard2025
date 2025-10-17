@@ -43,14 +43,20 @@ void Intake::run() {
     outtake();
   }
   // intake
-  else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) ||
-           controller.get_digital(
+  else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE)|| controller.get_digital(
                CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_HIGH) ||
            controller.get_digital(CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID)) {
     intake();
-  } else
+  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) && controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
+    intake();
+  } 
+  else
     stop();
 
   if (controller.get_digital_new_press(CONTROLLER_BUTTONS::INTAKE::TOGGLE))
     toggle();
+
+    // || controller.get_digital(
+          //      CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_HIGH) ||
+          //  controller.get_digital(CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID)
 }

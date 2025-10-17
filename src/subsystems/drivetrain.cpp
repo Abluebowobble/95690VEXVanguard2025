@@ -156,14 +156,14 @@ void Drivetrain::init() {
       // Get current robot pose from odometry system
       lemlib::Pose pose = chassis.getPose();
 
-      // // Display position and status on brain LCD (5 lines)
-      // pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
-      // pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
-      // pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
-      // pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
-      // // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
-      // pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position()); // Secondary IMU heading
-      // pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
+      // Display position and status on brain LCD (5 lines)
+      pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
+      pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
+      pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
+      pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
+      // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
+      pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position()); // Secondary IMU heading
+      pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
 
       // Log position data to LemLib telemetry system (for graphing/debugging)
       lemlib::telemetrySink()->info("Chassis pose: x: %f, y: %f, theta: %f",

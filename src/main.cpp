@@ -12,6 +12,7 @@
 #include "subsystems/endeffector.hpp"
 #include "subsystems/intake.hpp"
 #include "subsystems/lil_will.hpp"
+#include "subsystems/wing.hpp"
 // tallest 1
 // second tallest 2
 //  port 9 closer to intake
@@ -22,6 +23,7 @@ struct RobotSubsystems {
   EndEffector endeffector;
   Intake intake;
   LilWill lilWill;
+  Wing wing;
 } subsystems;
 
 struct RobotScreen {
@@ -58,7 +60,6 @@ void initialize() {
   subsystems.drivetrain.init();
   subsystems.intake.init();
   subsystems.endeffector.init();
-
 }
 
 /**
@@ -91,52 +92,65 @@ void simple_auton() {
   // get first 3 balls
   subsystems.intake.intake();
   // chassis.moveToPose(28, 18, 310, 2000, {.lead = 0.1, .maxSpeed = 50});
-  chassis.moveToPoint(6, 28, 5000, {.maxSpeed = 60});
-  chassis.waitUntilDone();
-  pros::delay(500);
+  chassis.moveToPoint(6, 26, 5000, {.maxSpeed = 55});
 
-  chassis.moveToPoint(4, 20, 5000, {.maxSpeed = 80});
+  chassis.waitUntil(20);
+  subsystems.lilWill.will_pneumatic.extend();
 
-  chassis.waitUntilDone();
-  subsystems.intake.stop();
+  // chassis.moveToPoint(4, 20, 5000, {.maxSpeed = 80});
 
   // // move to middle score
-  chassis.turnToHeading(140, 2000);
-  chassis.moveToPoint(-2, 24, 2000, {.forwards = false}); // !!
-  chassis.waitUntilDone();
-  chassis.turnToHeading(140, 2000);
-  subsystems.endeffector.score_L2();
-  subsystems.intake.intake();
+  // 140 if blue
+  // else 320
+  chassis.turnToHeading(312, 2000);
+  subsystems.lilWill.will_pneumatic.retract();
+  chassis.moveToPoint(-9, 35, 2000); // !!// forwards false if blue
+  chassis.turnToHeading(312, 2000);
+  subsystems.intake.outtake();
+  chassis.moveToPoint(6, 26, 5000, {.forwards = false});
+
+  // if blue
+  // subsystems.endeffector.score_L2();
+  // subsystems.intake.outtake();
+  // pros::delay(50);
+  // else
+  pros::delay(300);
 
   // // score
 
   // keep scoring until all scored
-  // while (subsystems.endeffector.get_L2_color() != globals::SensorColors::NONE) {
+  // while (subsystems.endeffector.get_L2_color() !=
+  // globals::SensorColors::NONE) {
   //   pros::delay(50);
   // }
   // pros::delay(2000);
-
-  subsystems.endeffector.stop();
+  // if blue
+  // subsystems.endeffector.stop();
 
   // // go to match loader
-  chassis.moveToPoint(32.3, -9.4, 2000, {.maxSpeed = 90});
+  // 29, -18
+  chassis.moveToPoint(34.3, -9, 2000, {.maxSpeed = 90});
   chassis.turnToHeading(180, 2000, {.maxSpeed = 90});
   // match load
-  subsystems.lilWill.down();
+  subsystems.lilWill.will_pneumatic.extend();
   subsystems.endeffector.index();
-  chassis.moveToPoint(30.3, -20, 5000, {.maxSpeed = 50});
+  chassis.moveToPoint(37, -20, 5000, {.maxSpeed = 50});
+  chassis.moveToPoint(37, -18, 5000, {.maxSpeed = 80});
+  chassis.moveToPoint(37, -20, 5000, {.maxSpeed = 80});
   chassis.waitUntilDone();
-  pros::delay(2000);
+  pros::delay(1500);
 
   // score
-  chassis.moveToPoint(30.3, 12, 2000, {.forwards = false, .maxSpeed = 70});
+  chassis.moveToPoint(30, 12, 2000, {.forwards = false, .maxSpeed = 70});
 
+  // set up hood
   chassis.waitUntil(6);
-  subsystems.lilWill.up();
+  subsystems.lilWill.will_pneumatic.retract();
+  subsystems.lilWill.hood_pneumatic.extend();
 
+  // score L3
   chassis.waitUntilDone();
   subsystems.endeffector.score_L3();
-
 }
 
 ASSET(stra_txt)
@@ -152,9 +166,7 @@ ASSET(stra_txt)
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-  simple_auton();
-}
+void autonomous() { simple_auton(); }
 
 void snap_to_heading() {
   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
@@ -162,41 +174,37 @@ void snap_to_heading() {
 }
 
 void colour_debug() {
-    // // Start color sensor debug display task
+  // // Start color sensor debug display task
   pros::Task colour_check([&]() {
     pros::delay(50);
     while (true) {
-  //     globals::SensorColors l2_color = subsystems.endeffector.get_L2_color();
-  //     globals::SensorColors l3_color = subsystems.endeffector.get_L3_color();
+      globals::SensorColors l2_color = subsystems.endeffector.get_L2_color();
+      globals::SensorColors l3_color = subsystems.endeffector.get_L3_color();
 
-  //     double l2_hue = subsystems.endeffector.get_L2_hue();
-  //     double l3_hue = subsystems.endeffector.get_L3_hue();
+      double l2_hue = subsystems.endeffector.get_L2_hue();
+      double l3_hue = subsystems.endeffector.get_L3_hue();
 
-  //     const char *l2_str = (l2_color == globals::SensorColors::RED)    ?
-  //     "RED"
-  //                          : (l2_color == globals::SensorColors::BLUE) ?
-  //                          "BLUE"
-  //                                                                      :
-  //                                                                      "NONE";
-  //     const char *l3_str = (l3_color == globals::SensorColors::RED)    ?
-  //     "RED"
-  //                          : (l3_color == globals::SensorColors::BLUE) ?
-  //                          "BLUE"
-  //                                                                      :
-  //                                                                      "NONE";
+      const char *l2_str = (l2_color == globals::SensorColors::RED)    ? "RED"
+                           : (l2_color == globals::SensorColors::BLUE) ? "BLUE"
+                                                                       : "NONE";
+      const char *l3_str = (l3_color == globals::SensorColors::RED)    ? "RED"
+                           : (l3_color == globals::SensorColors::BLUE) ? "BLUE"
+                                                                       : "NONE";
 
       // Get voltages for all 6 motors (in millivolts, convert to volts)
-      std::vector<std::int32_t> left_voltages = subsystems.drivetrain.get_left_motors().get_voltage_all();
-      std::vector<std::int32_t> right_voltages = subsystems.drivetrain.get_right_motors().get_voltage_all();
+      std::vector<std::int32_t> left_voltages =
+          subsystems.drivetrain.get_left_motors().get_voltage_all();
+      std::vector<std::int32_t> right_voltages =
+          subsystems.drivetrain.get_right_motors().get_voltage_all();
 
       pros::lcd::print(5, "L: %.1f %.1f %.1f | R: %.1f %.1f %.1f",
-                       left_voltages[0] / 1000.0, left_voltages[1] / 1000.0, left_voltages[2] / 1000.0,
-                       right_voltages[0] / 1000.0, right_voltages[1] / 1000.0, right_voltages[2] / 1000.0);
+                       left_voltages[0] / 1000.0, left_voltages[1] / 1000.0,
+                       left_voltages[2] / 1000.0, right_voltages[0] / 1000.0,
+                       right_voltages[1] / 1000.0, right_voltages[2] / 1000.0);
 
       pros::lcd::print(6, "proximity L2: %d | L3: %d",
-                         subsystems.endeffector.L2_color_sensor.get_proximity(),
-                         subsystems.endeffector.L3_color_sensor.get_proximity()
-);
+                       subsystems.endeffector.L2_color_sensor.get_proximity(),
+                       subsystems.endeffector.L3_color_sensor.get_proximity());
 
       pros::lcd::print(7, "Upper voltage: %.1fV, Lower voltage: %.1fV",
                        subsystems.intake.upper_motor.get_voltage() / 1000.0,
@@ -205,7 +213,7 @@ void colour_debug() {
       pros::delay(50);
     }
   });
-    // while (true) {
+  // while (true) {
   //   subsystems.endeffector.set_volts(
   //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
   //   subsystems.intake.set_volts(
@@ -232,7 +240,7 @@ void colour_debug() {
 void opcontrol() {
   // subsystems.lilWill.set_start();
 
-  colour_debug();
+  // colour_debug();
 
   while (true) {
     // Drivetrain control
@@ -249,6 +257,9 @@ void opcontrol() {
 
     // lilwill
     subsystems.lilWill.run();
+
+    // wing
+    subsystems.wing.run();
 
     // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
     //   simple_auton();
