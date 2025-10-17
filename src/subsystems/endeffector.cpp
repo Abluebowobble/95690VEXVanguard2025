@@ -11,7 +11,7 @@ EndEffector::EndEffector()
       lower_motor(PORT_VALUES::LOWER_ENDEFFECTOR_MOTOR_PORT),
       L2_color_sensor(PORT_VALUES::L2_COLOR_SENSOR),
       L3_color_sensor(PORT_VALUES::L3_COLOR_SENSOR), eject_bottom(false),
-      eject_top(false), manual_control(false) {
+      eject_top(false), manual_control(false), stop_for_indexing(false) {
   pros::Task(
       [](void *param) {
         static_cast<EndEffector *>(param)->set_L2_color(param);
@@ -29,7 +29,7 @@ void EndEffector::set_L2_color(void *param) {
   pros::delay(10);
   while (true) {
     L2_color = L2_color_sensor.get_color();
-    pros::delay(20);
+    pros::delay(100);
   }
 }
 
@@ -58,6 +58,18 @@ globals::SensorColors EndEffector::get_L3_color() { return L3_color; }
 double EndEffector::get_L2_hue() { return L2_color_sensor.get_hue(); }
 
 double EndEffector::get_L3_hue() { return L3_color_sensor.get_hue(); }
+
+void EndEffector::index() {
+  if (L3_color_sensor.get_proximity() > 200) {
+    stop_for_indexing = true;
+  }
+
+  if (stop_for_indexing) {
+    stop();
+  } else {
+    basket_intake();
+  }
+}
 
 void EndEffector::init() {
   L2_color_sensor.set_led_pwm(100);
@@ -111,7 +123,11 @@ void EndEffector::run() {
     if (!manual_control && eject_bottom) {
       lower_motor.move(127);
     }
+  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE)) {
+    index();
   } else {
+    // Reset stop flag when button is released
+    stop_for_indexing = false;
     stop();
   }
 }

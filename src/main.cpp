@@ -1,15 +1,17 @@
 #include "main.h"
 #include "constants.hpp"
 #include "electronics/selector.hpp"
+#include "globals.hpp"
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "lemlib/chassis/chassis.hpp"
 #include "pros/llemu.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
+#include "pros/rtos.hpp"
 #include "subsystems/drivetrain.hpp"
 #include "subsystems/endeffector.hpp"
 #include "subsystems/intake.hpp"
 #include "subsystems/lil_will.hpp"
-#include "subsystems/magazine.hpp"
 // tallest 1
 // second tallest 2
 //  port 9 closer to intake
@@ -17,7 +19,6 @@
 
 struct RobotSubsystems {
   Drivetrain drivetrain;
-  Magazine magazine;
   EndEffector endeffector;
   Intake intake;
   LilWill lilWill;
@@ -28,7 +29,6 @@ struct RobotScreen {
 } screen;
 
 // ASSETS
-ASSET(isabellasstraightcode_txt)
 
 /**
  * A callback function for LLEMU's center button.
@@ -56,46 +56,9 @@ void initialize() {
   pros::lcd::initialize();
 
   subsystems.drivetrain.init();
-  subsystems.magazine.init();
+  subsystems.intake.init();
   subsystems.endeffector.init();
 
-  pros::delay(100);
-
-  // pros::Task colour_check([&]() {
-  //   while (true) {
-  //     globals::SensorColors l2_color = subsystems.endeffector.get_L2_color();
-  //     globals::SensorColors l3_color = subsystems.endeffector.get_L3_color();
-
-  //     double l2_hue = subsystems.endeffector.get_L2_hue();
-  //     double l3_hue = subsystems.endeffector.get_L3_hue();
-
-  //     const char *l2_str = (l2_color == globals::SensorColors::RED)    ?
-  //     "RED"
-  //                          : (l2_color == globals::SensorColors::BLUE) ?
-  //                          "BLUE"
-  //                                                                      :
-  //                                                                      "NONE";
-  //     const char *l3_str = (l3_color == globals::SensorColors::RED)    ?
-  //     "RED"
-  //                          : (l3_color == globals::SensorColors::BLUE) ?
-  //                          "BLUE"
-  //                                                                      :
-  //                                                                      "NONE";
-
-  //     pros::lcd::print(1, "L2:%s(%.0f) L3:%s(%.0f)", l2_str, l2_hue, l3_str,
-  //                      l3_hue);
-
-  //     pros::lcd::print(2, "Eject L2: %d | L3: %d",
-  //                      subsystems.endeffector.should_eject_L2(),
-  //                      subsystems.endeffector.should_eject_L3());
-
-  //     pros::lcd::print(3, "Upper voltage: %.1f, Lower voltage: %.1f",
-  //                      subsystems.magazine.upper_motor.get_voltage(),
-  //                      subsystems.magazine.lower_motor.get_voltage());
-
-  //     pros::delay(50);
-  //   }
-  // });
 }
 
 /**
@@ -118,6 +81,66 @@ void competition_initialize() {
   //  screen.selector.selector();
 }
 
+void simple_auton() {
+
+  lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+  // v2
+
+  chassis.setPose(0, 0, 0);
+
+  // get first 3 balls
+  subsystems.intake.intake();
+  // chassis.moveToPose(28, 18, 310, 2000, {.lead = 0.1, .maxSpeed = 50});
+  chassis.moveToPoint(6, 28, 5000, {.maxSpeed = 60});
+  chassis.waitUntilDone();
+  pros::delay(500);
+
+  chassis.moveToPoint(4, 20, 5000, {.maxSpeed = 80});
+
+  chassis.waitUntilDone();
+  subsystems.intake.stop();
+
+  // // move to middle score
+  chassis.turnToHeading(140, 2000);
+  chassis.moveToPoint(-2, 24, 2000, {.forwards = false}); // !!
+  chassis.waitUntilDone();
+  chassis.turnToHeading(140, 2000);
+  subsystems.endeffector.score_L2();
+  subsystems.intake.intake();
+
+  // // score
+
+  // keep scoring until all scored
+  // while (subsystems.endeffector.get_L2_color() != globals::SensorColors::NONE) {
+  //   pros::delay(50);
+  // }
+  // pros::delay(2000);
+
+  subsystems.endeffector.stop();
+
+  // // go to match loader
+  chassis.moveToPoint(32.3, -9.4, 2000, {.maxSpeed = 90});
+  chassis.turnToHeading(180, 2000, {.maxSpeed = 90});
+  // match load
+  subsystems.lilWill.down();
+  subsystems.endeffector.index();
+  chassis.moveToPoint(30.3, -20, 5000, {.maxSpeed = 50});
+  chassis.waitUntilDone();
+  pros::delay(2000);
+
+  // score
+  chassis.moveToPoint(30.3, 12, 2000, {.forwards = false, .maxSpeed = 70});
+
+  chassis.waitUntil(6);
+  subsystems.lilWill.up();
+
+  chassis.waitUntilDone();
+  subsystems.endeffector.score_L3();
+
+}
+
+ASSET(stra_txt)
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -130,18 +153,66 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-  // pid tuning
+  simple_auton();
+}
+
+void snap_to_heading() {
   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-  chassis.calibrate();
+  chassis.turnToHeading(0, 5000);
+}
 
-  chassis.setPose(0, 0, 270);
+void colour_debug() {
+    // // Start color sensor debug display task
+  pros::Task colour_check([&]() {
+    pros::delay(50);
+    while (true) {
+  //     globals::SensorColors l2_color = subsystems.endeffector.get_L2_color();
+  //     globals::SensorColors l3_color = subsystems.endeffector.get_L3_color();
 
-  // chassis.moveToPoint(10, 0, 5000);
-  chassis.turnToHeading(90, 5000);
+  //     double l2_hue = subsystems.endeffector.get_L2_hue();
+  //     double l3_hue = subsystems.endeffector.get_L3_hue();
 
-  // jerry
-  // chassis.setPose(0, 0, 0);
-  // chassis.follow(isabellasstraightcode_txt, 15, 100000);
+  //     const char *l2_str = (l2_color == globals::SensorColors::RED)    ?
+  //     "RED"
+  //                          : (l2_color == globals::SensorColors::BLUE) ?
+  //                          "BLUE"
+  //                                                                      :
+  //                                                                      "NONE";
+  //     const char *l3_str = (l3_color == globals::SensorColors::RED)    ?
+  //     "RED"
+  //                          : (l3_color == globals::SensorColors::BLUE) ?
+  //                          "BLUE"
+  //                                                                      :
+  //                                                                      "NONE";
+
+      // Get voltages for all 6 motors (in millivolts, convert to volts)
+      std::vector<std::int32_t> left_voltages = subsystems.drivetrain.get_left_motors().get_voltage_all();
+      std::vector<std::int32_t> right_voltages = subsystems.drivetrain.get_right_motors().get_voltage_all();
+
+      pros::lcd::print(5, "L: %.1f %.1f %.1f | R: %.1f %.1f %.1f",
+                       left_voltages[0] / 1000.0, left_voltages[1] / 1000.0, left_voltages[2] / 1000.0,
+                       right_voltages[0] / 1000.0, right_voltages[1] / 1000.0, right_voltages[2] / 1000.0);
+
+      pros::lcd::print(6, "proximity L2: %d | L3: %d",
+                         subsystems.endeffector.L2_color_sensor.get_proximity(),
+                         subsystems.endeffector.L3_color_sensor.get_proximity()
+);
+
+      pros::lcd::print(7, "Upper voltage: %.1fV, Lower voltage: %.1fV",
+                       subsystems.intake.upper_motor.get_voltage() / 1000.0,
+                       subsystems.intake.lower_motor.get_voltage() / 1000.0);
+
+      pros::delay(50);
+    }
+  });
+    // while (true) {
+  //   subsystems.endeffector.set_volts(
+  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+  //   subsystems.intake.set_volts(
+  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+
+  //   pros::delay(20);
+  // }
 }
 
 /**
@@ -161,46 +232,7 @@ void autonomous() {
 void opcontrol() {
   // subsystems.lilWill.set_start();
 
-  // Start color sensor debug display task
-  pros::Task colour_check([&]() {
-    pros::delay(50);
-    while (true) {
-      globals::SensorColors l2_color = subsystems.endeffector.get_L2_color();
-      globals::SensorColors l3_color = subsystems.endeffector.get_L3_color();
-
-      double l2_hue = subsystems.endeffector.get_L2_hue();
-      double l3_hue = subsystems.endeffector.get_L3_hue();
-
-      const char *l2_str = (l2_color == globals::SensorColors::RED)    ? "RED"
-                           : (l2_color == globals::SensorColors::BLUE) ? "BLUE"
-                                                                       : "NONE";
-      const char *l3_str = (l3_color == globals::SensorColors::RED)    ? "RED"
-                           : (l3_color == globals::SensorColors::BLUE) ? "BLUE"
-                                                                       : "NONE";
-
-      pros::lcd::print(5, "L2:%s(%.0f) L3:%s(%.0f)", l2_str, l2_hue, l3_str,
-                       l3_hue);
-
-      pros::lcd::print(6, "Eject L2: %d | L3: %d",
-                       subsystems.endeffector.should_eject_L2(),
-                       subsystems.endeffector.should_eject_L3());
-
-      pros::lcd::print(7, "Upper voltage: %.1f, Lower voltage: %.1f",
-                       subsystems.magazine.upper_motor.get_voltage(),
-                       subsystems.magazine.lower_motor.get_voltage());
-
-      pros::delay(50);
-    }
-  });
-
-  // while (true) {
-  //   subsystems.endeffector.set_volts(
-  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
-  //   subsystems.magazine.set_volts(
-  //       globals::controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
-
-  //   pros::delay(20);  
-  // }
+  colour_debug();
 
   while (true) {
     // Drivetrain control
@@ -209,8 +241,8 @@ void opcontrol() {
     // EndEffector control
     subsystems.endeffector.run();
 
-    // Magazine control
-    subsystems.magazine.run();
+    // intake control
+    subsystems.intake.run();
 
     // Intake
     subsystems.intake.run();
@@ -219,22 +251,16 @@ void opcontrol() {
     subsystems.lilWill.run();
 
     // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
-    //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-    //   chassis.calibrate();
-
-    //   chassis.setPose(0, 0, 0);
-
-    //   // chassis.moveToPoint(10, 0, 5000);
-    //   chassis.turnToHeading(90, 5000);
+    //   simple_auton();
     // }
 
     // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
     //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-    //   chassis.calibrate();
-    //   chassis.setPose(34, 48, 89.381);
-    //   chassis.follow(isabellasstraightcode_txt, 15, 100000);
+
+    //   chassis.setPose(0, 0, 0);
+    //   chassis.follow(stra_txt, 15, 1000000);
     // }
 
-  pros::delay(20);
+    pros::delay(20);
   }
 }

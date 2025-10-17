@@ -40,4 +40,5 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
  */
 SensorColors alliance = SensorColors::BLUE;
 
+
 } // namespace globals

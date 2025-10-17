@@ -59,7 +59,6 @@ Drivetrain::Drivetrain()
 
       // IMU Sensors - Dual IMU setup for sensor fusion (improved heading accuracy)
       imu1(PORT_VALUES::IMU_1),
-      imu2(PORT_VALUES::IMU_2),
 
       // Rotation Sensors for Tracking Wheels
       horizontalRotationSensor(PORT_VALUES::HORIZONTAL_ROTATION_SENSOR), // Port 6: Measures lateral movement
@@ -157,12 +156,14 @@ void Drivetrain::init() {
       // Get current robot pose from odometry system
       lemlib::Pose pose = chassis.getPose();
 
-      // Display position and status on brain LCD (5 lines)
-      pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
-      pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
-      pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
-      pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
-      pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
+      // // Display position and status on brain LCD (5 lines)
+      // pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
+      // pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
+      // pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
+      // pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
+      // // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
+      // pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position()); // Secondary IMU heading
+      // pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
 
       // Log position data to LemLib telemetry system (for graphing/debugging)
       lemlib::telemetrySink()->info("Chassis pose: x: %f, y: %f, theta: %f",
@@ -208,7 +209,7 @@ void Drivetrain::drive() {
   // - false: Don't use slew rate limiting (we handle smoothing with curves)
   // - DESATURATE_BIAS: When both throttle and turn would exceed motor limits,
   //                    this determines how to prioritize (0.75 = favor throttle slightly)
-  chassis.arcade(-throttle, -turn, false, OPERATOR_CONSTANTS::DESATURATE_BIAS);
+  chassis.arcade(throttle, turn, false, OPERATOR_CONSTANTS::DESATURATE_BIAS);
 }
 
 /**
@@ -224,4 +225,20 @@ void Drivetrain::drive() {
  */
 lemlib::Chassis& Drivetrain::get_chassis() {
   return chassis;
+}
+
+/**
+ * @brief Get left motor group for debugging
+ * @return Reference to left motor group
+ */
+pros::MotorGroup& Drivetrain::get_left_motors() {
+  return leftMotorGroup;
+}
+
+/**
+ * @brief Get right motor group for debugging
+ * @return Reference to right motor group
+ */
+pros::MotorGroup& Drivetrain::get_right_motors() {
+  return rightMotorGroup;
 }

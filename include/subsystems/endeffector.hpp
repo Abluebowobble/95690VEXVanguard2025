@@ -23,6 +23,7 @@ public:
   globals::SensorColors get_L3_color();
   double get_L2_hue();
   double get_L3_hue(); 
+  void index();
 
   pros::Motor upper_motor;
   pros::Motor lower_motor;
@@ -33,4 +34,5 @@ public:
   bool eject_bottom;
   bool eject_top;
   bool manual_control;
+  bool stop_for_indexing;
 };

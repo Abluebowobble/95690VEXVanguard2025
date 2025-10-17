@@ -76,6 +76,18 @@ public:
    */
   lemlib::Chassis& get_chassis();
 
+  /**
+   * @brief Get left motor group for debugging
+   * @return Reference to left motor group
+   */
+  pros::MotorGroup& get_left_motors();
+
+  /**
+   * @brief Get right motor group for debugging
+   * @return Reference to right motor group
+   */
+  pros::MotorGroup& get_right_motors();
+
 private:
   // ====================
   // MOTORS
@@ -87,7 +99,7 @@ private:
   // SENSORS
   // ====================
   pros::Imu imu1; ///< Primary IMU for heading tracking
-  pros::Imu imu2; ///< Secondary IMU for sensor fusion (more accurate heading)
+  // pros::Imu imu2; ///< Secondary IMU for sensor fusion (more accurate heading)
 
   // ====================
   // DRIVE CURVES
