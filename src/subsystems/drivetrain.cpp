@@ -145,34 +145,34 @@ void Drivetrain::init() {
   chassis.calibrate();
 
   // Set motor brake modes to BRAKE for consistent stopping
-  leftMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE);
-  rightMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE);
+  leftMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
+  rightMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
 
   // Create background task for real-time position display on brain LCD
   // Lambda capture [&] allows access to chassis and imu1 members
-  pros::Task screenTask([&]() {
-    pros::delay(10);
-    while (true) {
-      // Get current robot pose from odometry system
-      lemlib::Pose pose = chassis.getPose();
+  // pros::Task screenTask([&]() {
+  //   pros::delay(10);
+  //   while (true) {
+  //     // Get current robot pose from odometry system
+  //     lemlib::Pose pose = chassis.getPose();
 
-      // Display position and status on brain LCD (5 lines)
-      pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
-      pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
-      pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
-      pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
-      // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
-      pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position()); // Secondary IMU heading
-      pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
+  //     // Display position and status on brain LCD (5 lines)
+  //     pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
+  //     pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
+  //     pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
+  //     pros::lcd::print(3, "IMU1: %f", imu1.get_heading()); // Primary IMU heading
+  //     // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
+  //     pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position()); // Secondary IMU heading
+  //     pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
 
-      // Log position data to LemLib telemetry system (for graphing/debugging)
-      lemlib::telemetrySink()->info("Chassis pose: x: %f, y: %f, theta: %f",
-                                    pose.x, pose.y, pose.theta);
+  //     // Log position data to LemLib telemetry system (for graphing/debugging)
+  //     lemlib::telemetrySink()->info("Chassis pose: x: %f, y: %f, theta: %f",
+  //                                   pose.x, pose.y, pose.theta);
 
-      // Update every 50ms (20Hz refresh rate) to balance responsiveness and CPU usage
-      pros::delay(50);
-    }
-  });
+  //     // Update every 50ms (20Hz refresh rate) to balance responsiveness and CPU usage
+  //     pros::delay(50);
+  //   }
+  // });
 }
 
 /**
@@ -194,21 +194,6 @@ void Drivetrain::drive() {
   int throttle = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);  // Forward/backward
   int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);     // Left/right turn
 
-  // Special handling for stationary turning:
-  // When throttle is at or near zero (<=1), apply the exponential steer curve directly.
-  // This allows for more controlled point-turns and fine rotational adjustments.
-  // During movement, LemLib's chassis.arcade() applies curves automatically.
-  if (throttle <= 1) {
-    turn = std::round(steerCurve.curve(turn));
-  }
-
-  // Apply arcade drive through LemLib chassis
-  // Parameters:
-  // - throttle: Forward/backward input (-127 to +127)
-  // - -turn: Turning input (negated for correct direction)
-  // - false: Don't use slew rate limiting (we handle smoothing with curves)
-  // - DESATURATE_BIAS: When both throttle and turn would exceed motor limits,
-  //                    this determines how to prioritize (0.75 = favor throttle slightly)
   chassis.arcade(throttle, turn, false, OPERATOR_CONSTANTS::DESATURATE_BIAS);
 }
 

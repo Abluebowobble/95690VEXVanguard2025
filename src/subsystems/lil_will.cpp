@@ -9,7 +9,7 @@ using namespace globals;
 LilWill::LilWill()
     : will_pneumatic(PORT_VALUES::WILL_PNEUMATIC, false, false),
       hood_pneumatic(PORT_VALUES::HOOD_PNEUMATIC, false, false),
-      is_set_for_start(false), is_down(true) {}
+      is_set_for_start(false), is_down(false) {}
 
 void LilWill::toggle() {
   if (!is_set_for_start) {

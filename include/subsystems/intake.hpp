@@ -17,7 +17,6 @@ public:
   void toggle();
   
 // private:
-  pros::Motor lower_motor;
-  pros::Motor upper_motor;
+  pros::Motor motor;
   pros::adi::Pneumatics intake_pneumatic;
 };

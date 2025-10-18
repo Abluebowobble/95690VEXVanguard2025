@@ -11,8 +11,7 @@ constexpr int RIGHT_2 = 20;
 constexpr int RIGHT_3 = -16; // top motor
 
 // magazine
-constexpr int LOWER_INTAKE_MOTOR_PORT = 9;
-constexpr int UPPER_INTAKE_MOTOR_PORT = 10;
+constexpr int INTAKE_MOTOR_PORT = -9;
 
 // endeffector
 constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = 2;
@@ -54,7 +53,7 @@ constexpr double CURVE = 1.019;
 namespace STEER {
 constexpr int DEADBAND = 3;
 constexpr int MIN = 20;
-constexpr double CURVE = 1.02;
+constexpr double CURVE = 1.002;
 } // namespace STEER
 
 constexpr double DESATURATE_BIAS = 0.45;

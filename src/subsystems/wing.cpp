@@ -8,7 +8,7 @@
 using namespace globals;
 
 Wing::Wing()
-    : wing_pneumatic(PORT_VALUES::WING_PNEUMATIC, false, true)
+    : wing_pneumatic(PORT_VALUES::WING_PNEUMATIC, false, false)
       {}
 
 void Wing::toggle() {
