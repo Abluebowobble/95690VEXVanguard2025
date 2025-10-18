@@ -29,11 +29,6 @@ void EndEffector::set_L2_color(void *param) {
   pros::delay(10);
   while (true) {
     L2_color = L2_color_sensor.get_color();
-    if (L2_color != SensorColors::NONE) {
-      last_L2_color = L2_color;
-    }
-
-    should_eject_L2();
     pros::delay(20);
   }
 }
@@ -42,33 +37,18 @@ void EndEffector::set_L3_color(void *param) {
   pros::delay(10);
   while (true) {
     L3_color = L3_color_sensor.get_color();
-    if (L3_color != SensorColors::NONE) {
-      last_L3_color = L3_color;
-    }
-
-    should_eject_L3();
     pros::delay(20);
   }
 }
 
-void EndEffector::should_eject_L2() {
-  if (L2_color != globals::SensorColors::NONE && L2_color != last_L2_color) {
-    if (L2_color != globals::alliance) {
-      eject_bottom = true;
-    } else {
-      eject_bottom = false;
-    }
-  }
+bool EndEffector::should_eject_L2() {
+  return L2_color != globals::SensorColors::NONE &&
+         L2_color != globals::alliance;
 }
 
-void EndEffector::should_eject_L3() {
-  if (L3_color != globals::SensorColors::NONE && L3_color != last_L3_color) {
-    if (L3_color != globals::alliance) {
-      eject_bottom = true;
-    } else {
-      eject_bottom = false;
-    }
-  }
+bool EndEffector::should_eject_L3() {
+  return L3_color != globals::SensorColors::NONE &&
+         L3_color != globals::alliance;
 }
 
 globals::SensorColors EndEffector::get_L2_color() { return L2_color; }
@@ -119,9 +99,14 @@ void EndEffector::set_volts(int voltage) {
 void EndEffector::stop() { set_volts(0); }
 
 void EndEffector::run() {
-  if (controller.get_digital_new_press(
+  bool manual_control = false;
+  if (controller.get_digital(
           CONTROLLER_BUTTONS::ENDEFFECTOR::DISABLE_COLOR_SORTING)) {
-    manual_control = !manual_control;
+    manual_control = true;
+  } else {
+    eject_bottom = should_eject_L2();
+    eject_top = should_eject_L3();
+    manual_control = false;
   }
 
   if (controller.get_digital(CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID) &&
@@ -146,9 +131,9 @@ void EndEffector::run() {
   } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
              controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
     basket_intake();
-  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
+  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)){
     set_volts(-127);
-  } else {
+  }else {
     // Reset stop flag when button is released
     stop_for_indexing = false;
     stop();

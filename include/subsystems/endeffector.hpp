@@ -17,8 +17,8 @@ public:
   void stop();
   void set_L2_color(void* param);
   void set_L3_color(void* param);
-  void should_eject_L2();
-  void should_eject_L3();
+  bool should_eject_L2();
+  bool should_eject_L3();
   globals::SensorColors get_L2_color();
   globals::SensorColors get_L3_color();
   double get_L2_hue();

@@ -38,5 +38,5 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
  * This determines which color game pieces
  * to keep vs auto-eject during matches.
  */
-SensorColors alliance = SensorColors::RED;
+SensorColors alliance = SensorColors::BLUE;
 } // namespace globals
