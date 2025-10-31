@@ -2,7 +2,6 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep∏
 #include "pros/distance.hpp"
 #include "pros/optical.hpp"
-#include "electronics/vision.hpp"
 
 class Intake {
 public:
@@ -15,8 +14,9 @@ public:
   void intake();
   void stop();
   void toggle();
-  
-// private:
-  pros::Motor motor;
-  pros::adi::Pneumatics intake_pneumatic;
+
+  pros::adi::Pneumatics basket_pneumatic;
+  pros::Motor upper_motor;
+  pros::Motor lower_motor;
+  bool is_open;
 };

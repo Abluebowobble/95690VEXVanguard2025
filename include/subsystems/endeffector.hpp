@@ -4,6 +4,7 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep∏
 #include "lemlib/pose.hpp"
 #include "electronics/vision.hpp"
+#include "pros/adi.hpp"
 
 class EndEffector {
 public:

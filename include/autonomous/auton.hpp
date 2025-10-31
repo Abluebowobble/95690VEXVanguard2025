@@ -53,3 +53,7 @@ public:
    */
   static void AutonSwitcher(int autonNum);
 };
+
+// Autonomous routines
+void right_side_auto();
+void left_side_auto();

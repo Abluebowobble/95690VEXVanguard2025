@@ -6,44 +6,16 @@
 
 using namespace globals;
 
-LilWill::LilWill()
-    : will_pneumatic(PORT_VALUES::WILL_PNEUMATIC, false, false),
-      hood_pneumatic(PORT_VALUES::HOOD_PNEUMATIC, false, false),
-      is_set_for_start(false), is_down(false) {}
+LilWill::LilWill() : will_pneumatic(PORT_VALUES::WILL_PNEUMATIC, false, true) {}
 
-void LilWill::toggle() {
-  if (!is_set_for_start) {
-    set_start();
-    return;
-  }
-  will_pneumatic.toggle();
-  hood_pneumatic.toggle();
-}
+void LilWill::toggle() { will_pneumatic.toggle(); }
 
-void LilWill::set_start() {
-  will_pneumatic.retract();
-  hood_pneumatic.extend();
-  is_set_for_start = true;
-}
+void LilWill::down() { will_pneumatic.extend(); }
 
-void LilWill::down() {
-  will_pneumatic.extend();
-  hood_pneumatic.retract();
-}
-
-void LilWill::up() {
-   will_pneumatic.retract();
-  hood_pneumatic.extend();
-}
+void LilWill::up() { will_pneumatic.retract(); }
 
 void LilWill::run() {
   if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
-    if(is_down) {
-        up();
-        is_down = false;
-    } else {
-        down();
-        is_down = true;
-    }
+    will_pneumatic.toggle();
   }
 }

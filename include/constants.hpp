@@ -3,35 +3,35 @@
 
 namespace PORT_VALUES {
 // drivetrain
-constexpr int LEFT_1 = -14;
-constexpr int LEFT_2 = -13;
-constexpr int LEFT_3 = 12; // top motor
-constexpr int RIGHT_1 =19;
-constexpr int RIGHT_2 = 20;
-constexpr int RIGHT_3 = -16; // top motor
+constexpr int LEFT_1 = -5;
+constexpr int LEFT_2 = -20;
+constexpr int LEFT_3 = 7; // top motor
+constexpr int RIGHT_1 = 8;
+constexpr int RIGHT_2 = 2;
+constexpr int RIGHT_3 = -1; // top motor
 
 // magazine
-constexpr int INTAKE_MOTOR_PORT = -9;
+constexpr int LOWER_INTAKE_MOTOR_PORT = 3;
+constexpr int UPPER_INTAKE_MOTOR_PORT = 4;
 
 // endeffector
-constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = 2;
-constexpr int LOWER_ENDEFFECTOR_MOTOR_PORT = 15;
+constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = 18;
+constexpr int LOWER_ENDEFFECTOR_MOTOR_PORT = 19;
 
 // odometry
-constexpr int HORIZONTAL_ROTATION_SENSOR = 1;
-constexpr int VERTICAL_ROTATION_SENSOR = 3;
-constexpr int IMU_1 = 18; // newest
+constexpr int HORIZONTAL_ROTATION_SENSOR = 16;
+constexpr int VERTICAL_ROTATION_SENSOR = 6;
+constexpr int IMU_1 = 0; // newest
 // constexpr int IMU_2 = 11; // Second IMU port, old
 
 // sensors
-constexpr int L2_COLOR_SENSOR = 7;
-constexpr int L3_COLOR_SENSOR = 8;
+constexpr int L2_COLOR_SENSOR = 13;
+constexpr int L3_COLOR_SENSOR = 14;
 
 // pneumatics
-constexpr char INTAKE_PNEUMATIC = 'A';
-constexpr char WILL_PNEUMATIC = 'B';
-constexpr char HOOD_PNEUMATIC = 'C';
-constexpr char WING_PNEUMATIC = 'D';
+constexpr char WILL_PNEUMATIC = 'H'; // attached to both intake and hood, true extends hood
+constexpr char WING_PNEUAMTIC = 'F';
+constexpr char BASKET_PNEUMATIC = 'G';
 
 } // namespace PORT_VALUES
 
