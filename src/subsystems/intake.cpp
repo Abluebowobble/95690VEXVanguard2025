@@ -9,8 +9,7 @@ using namespace globals;
 Intake::Intake()
     : lower_motor(PORT_VALUES::LOWER_INTAKE_MOTOR_PORT),
       upper_motor(PORT_VALUES::UPPER_INTAKE_MOTOR_PORT),
-      basket_pneumatic(PORT_VALUES::BASKET_PNEUMATIC, true),
-      is_open(false) {}
+      basket_pneumatic(PORT_VALUES::BASKET_PNEUMATIC, true) {}
 
 void Intake::init() {
   upper_motor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -49,13 +48,7 @@ void Intake::run() {
 
   if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
              controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE))
-    is_open = true;
-  else
-    is_open = false;
-
-  if (is_open) {
     basket_pneumatic.extend();
-  } else {
+  else
     basket_pneumatic.retract();
-  }
 }

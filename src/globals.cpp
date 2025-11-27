@@ -2,12 +2,12 @@
  * @file globals.cpp
  * @brief Global variable instantiation and initialization
  *
- * This file contains the actual definitions and memory allocations for global variables
- * declared in globals.hpp. These variables are accessible throughout the entire program
- * and maintain shared state across subsystems.
+ * This file contains the actual definitions and memory allocations for global
+ * variables declared in globals.hpp. These variables are accessible throughout
+ * the entire program and maintain shared state across subsystems.
  *
- * Design note: While global variables are generally discouraged in larger applications,
- * they are commonly used in VEX robotics code for:
+ * Design note: While global variables are generally discouraged in larger
+ * applications, they are commonly used in VEX robotics code for:
  * - Sharing the controller object across subsystems
  * - Maintaining match state (alliance color, autonomous selection)
  * - Simplifying code in resource-constrained embedded environments
@@ -27,8 +27,9 @@ namespace globals {
 /**
  * @brief Master controller instantiation
  *
- * Creates the primary controller object used by all subsystems to read driver input.
- * Initialized as the master controller (as opposed to partner controller).
+ * Creates the primary controller object used by all subsystems to read driver
+ * input. Initialized as the master controller (as opposed to partner
+ * controller).
  */
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 

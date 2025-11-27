@@ -76,29 +76,29 @@ Drivetrain::Drivetrain()
       // Lateral PID Controller - For forward/backward autonomous movement
       // Note: Currently all zeros (not yet tuned)
       lateralController(
-          PID_CONSTANTS::LATERAL::KP,            // Proportional gain: How hard to correct position error
-          PID_CONSTANTS::LATERAL::KI,            // Integral gain: Corrects accumulated error over time
-          PID_CONSTANTS::LATERAL::KD,            // Derivative gain: Dampens oscillation
-          0,                                     // Anti-windup: Limits integral accumulation (0 = disabled)
-          PID_CONSTANTS::LATERAL::SMALL_ERROR,   // Small error threshold (inches): "Close enough" tolerance
-          PID_CONSTANTS::LATERAL::SMALL_TIMEOUT, // Small error timeout (ms): Time to stay in tolerance before settling
-          PID_CONSTANTS::LATERAL::LARGE_ERROR,   // Large error threshold (inches): Triggers timeout if exceeded
-          PID_CONSTANTS::LATERAL::LARGE_TIMEOUT, // Large error timeout (ms): Max time allowed in large error
-          PID_CONSTANTS::LATERAL::SLEW           // Slew rate (volts/sec): Max acceleration to prevent wheel slip
+          PID_CONSTANTS::LATERAL::KP,                   // Proportional gain: How hard to correct position error
+          PID_CONSTANTS::LATERAL::KI,                   // Integral gain: Corrects accumulated error over time
+          PID_CONSTANTS::LATERAL::KD,                   // Derivative gain: Dampens oscillation
+          0,                                            // Anti-windup: Limits integral accumulation (0 = disabled)
+          DRIVETRAIN_CONSTANTS::LATERAL::SMALL_ERROR,   // Small error threshold (inches): "Close enough" tolerance
+          DRIVETRAIN_CONSTANTS::LATERAL::SMALL_TIMEOUT, // Small error timeout (ms): Time to stay in tolerance before settling
+          DRIVETRAIN_CONSTANTS::LATERAL::LARGE_ERROR,   // Large error threshold (inches): Triggers timeout if exceeded
+          DRIVETRAIN_CONSTANTS::LATERAL::LARGE_TIMEOUT, // Large error timeout (ms): Max time allowed in large error
+          DRIVETRAIN_CONSTANTS::LATERAL::SLEW           // Slew rate (volts/sec): Max acceleration to prevent wheel slip
           ),
 
       // Angular PID Controller - For turning autonomous movement
       // Note: Tuned with KP=7.3, KD=6.5 for responsive turning
       angularController(
-          PID_CONSTANTS::ANGULAR::KP,            // Proportional gain: 7.3 (just above deadband for responsiveness)
-          PID_CONSTANTS::ANGULAR::KI,            // Integral gain: 0 (disabled to prevent wind-up)
-          PID_CONSTANTS::ANGULAR::KD,            // Derivative gain: 6.5 (reduced for small corrections)
-          0,                                     // Anti-windup: Disabled
-          PID_CONSTANTS::ANGULAR::SMALL_ERROR,   // Small error threshold (degrees): Angular tolerance
-          PID_CONSTANTS::ANGULAR::SMALL_TIMEOUT, // Small error timeout (ms): Settlement time
-          PID_CONSTANTS::ANGULAR::LARGE_ERROR,   // Large error threshold (degrees): Error limit
-          PID_CONSTANTS::ANGULAR::LARGE_TIMEOUT, // Large error timeout (ms): Max time in error
-          PID_CONSTANTS::ANGULAR::SLEW           // Slew rate (deg/sec²): Max rotational acceleration
+          PID_CONSTANTS::ANGULAR::KP,                   // Proportional gain: 7.3 (just above deadband for responsiveness)
+          PID_CONSTANTS::ANGULAR::KI,                   // Integral gain: 0 (disabled to prevent wind-up)
+          PID_CONSTANTS::ANGULAR::KD,                   // Derivative gain: 6.5 (reduced for small corrections)
+          0,                                            // Anti-windup: Disabled
+          DRIVETRAIN_CONSTANTS::ANGULAR::SMALL_ERROR,   // Small error threshold (degrees): Angular tolerance
+          DRIVETRAIN_CONSTANTS::ANGULAR::SMALL_TIMEOUT, // Small error timeout (ms): Settlement time
+          DRIVETRAIN_CONSTANTS::ANGULAR::LARGE_ERROR,   // Large error threshold (degrees): Error limit
+          DRIVETRAIN_CONSTANTS::ANGULAR::LARGE_TIMEOUT, // Large error timeout (ms): Max time in error
+          DRIVETRAIN_CONSTANTS::ANGULAR::SLEW           // Slew rate (deg/sec²): Max rotational acceleration
           ),
 
       // Odometry Sensor Container - Packages all sensors for LemLib

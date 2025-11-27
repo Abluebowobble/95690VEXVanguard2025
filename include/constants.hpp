@@ -1,4 +1,5 @@
 #pragma once
+#include "pid.hpp"
 #include "pros/misc.h"
 
 namespace PORT_VALUES {
@@ -11,8 +12,8 @@ constexpr int RIGHT_2 = 2;
 constexpr int RIGHT_3 = -1; // top motor
 
 // magazine
-constexpr int LOWER_INTAKE_MOTOR_PORT = 3;
-constexpr int UPPER_INTAKE_MOTOR_PORT = 4;
+constexpr int LOWER_INTAKE_MOTOR_PORT = -3;
+constexpr int UPPER_INTAKE_MOTOR_PORT = -4;
 
 // endeffector
 constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = 18;
@@ -59,11 +60,8 @@ constexpr double CURVE = 1.002;
 constexpr double DESATURATE_BIAS = 0.45;
 } // namespace OPERATOR_CONSTANTS
 
-namespace PID_CONSTANTS {
+namespace DRIVETRAIN_CONSTANTS {
 namespace LATERAL {
-constexpr double KP = 7;
-constexpr double KI = 0;
-constexpr double KD = 50;
 constexpr double SMALL_ERROR = 1;
 constexpr int SMALL_TIMEOUT = 100;
 constexpr double LARGE_ERROR = 3;
@@ -72,16 +70,13 @@ constexpr double SLEW = 0.0;
 } // namespace LATERAL
 
 namespace ANGULAR {
-constexpr double KP = 2.3;
-constexpr double KI = 0;
-constexpr double KD = 12;
 constexpr double SMALL_ERROR = 1;
 constexpr int SMALL_TIMEOUT = 100;
 constexpr double LARGE_ERROR = 3;
 constexpr int LARGE_TIMEOUT = 500;
 constexpr double SLEW = 0;
 } // namespace ANGULAR
-} // namespace PID_CONSTANTS
+} // namespace DRIVETRAIN_CONSTANTS
 
 namespace VISION {
 namespace RED {
