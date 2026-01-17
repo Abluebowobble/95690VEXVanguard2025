@@ -16,7 +16,7 @@ constexpr int LOWER_INTAKE_MOTOR_PORT = -3;
 constexpr int UPPER_INTAKE_MOTOR_PORT = -4;
 
 // endeffector
-constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = 18;
+constexpr int UPPER_ENDEFFECTOR_MOTOR_PORT = -18;
 constexpr int LOWER_ENDEFFECTOR_MOTOR_PORT = 19;
 
 // odometry
@@ -96,8 +96,8 @@ constexpr double LOWER_BOUND = 210;
 namespace CONTROLLER_BUTTONS {
 
 namespace ENDEFFECTOR {
-constexpr auto SCORE_HIGH = pros::E_CONTROLLER_DIGITAL_L1;
-constexpr auto SCORE_MID = pros::E_CONTROLLER_DIGITAL_L2;
+constexpr auto SCORE_HIGH = pros::E_CONTROLLER_DIGITAL_L2;
+constexpr auto SCORE_MID = pros::E_CONTROLLER_DIGITAL_L1;
 constexpr auto DISABLE_COLOR_SORTING = pros::E_CONTROLLER_DIGITAL_B;
 } // namespace ENDEFFECTOR
 
@@ -118,4 +118,3 @@ constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_A;
 }
 } // namespace CONTROLLER_BUTTONS
 
-#pragma once

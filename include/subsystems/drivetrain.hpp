@@ -41,6 +41,8 @@ public:
    */
   Drivetrain();
 
+  double limiter;
+
   /**
    * @brief Operator control drive method - call every loop iteration
    *

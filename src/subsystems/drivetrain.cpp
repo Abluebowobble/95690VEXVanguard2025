@@ -36,7 +36,8 @@ using namespace globals;
  */
 Drivetrain::Drivetrain()
     : // Motor Groups - Blue cartridge (600 RPM) for balance of speed and torque
-      leftMotorGroup(
+    limiter(1),  
+    leftMotorGroup(
           {PORT_VALUES::LEFT_1, PORT_VALUES::LEFT_2, PORT_VALUES::LEFT_3},
           pros::MotorGearset::blue), // 3 motors on left side (ports 20, 19, -18)
       rightMotorGroup(
@@ -148,7 +149,7 @@ void Drivetrain::init() {
   leftMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
   rightMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
 
-  // Create background task for real-time position display on brain LCD
+  // Create background task for real-time position display on brain LCDd
   // Lambda capture [&] allows access to chassis and imu1 members
   // pros::Task screenTask([&]() {
   //   pros::delay(10);
@@ -193,6 +194,16 @@ void Drivetrain::drive() {
   // Read joystick values from controller (-127 to +127)
   int throttle = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);  // Forward/backward
   int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);     // Left/right turn
+
+  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
+    if (limiter == 1) {
+      limiter = 0.5;
+    } else {
+      limiter = 1;
+    }
+  }
+
+  throttle *= limiter;
 
   chassis.arcade(throttle, turn, false, OPERATOR_CONSTANTS::DESATURATE_BIAS);
 }
