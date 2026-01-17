@@ -110,7 +110,7 @@ void right_side_auto() {
   chassis.turnToHeading(180, 1000);
 
   // do this together hopefully, run in to match loader
-  chassis.moveToPoint(34, -30, 700, {.minSpeed = 127});
+  chassis.moveToPoint(34, -60, 1000, {.minSpeed = 100});
   chassis.waitUntilDone();
   pros::delay(1000);
   subsystems.endeffector.index();
@@ -125,8 +125,11 @@ void right_side_auto() {
   chassis.waitUntil(6);
   subsystems.lilWill.will_pneumatic.retract();
   subsystems.endeffector.score_L3();
-  chassis.moveToPoint(37, 70, 10000, {.forwards = true, .maxSpeed = 120});
-  chassis.moveToPoint(37, 70, 10000, {.forwards = false, .maxSpeed = 120});
+  chassis.moveToPoint(38, 70, 5000, {.forwards = false, .maxSpeed = 120});
+
+  // chassis.moveToPoint(9, 9, 10000, {.forwards = true, .minSpeed = 80});
+
+  
 
 }
 
@@ -180,7 +183,7 @@ void left_side_auto() {
   chassis.turnToHeading(180, 1000);
 
   // do this together hopefully, run in to match loader
-  chassis.moveToPoint(-33, -30, 700, {.minSpeed = 100});
+  chassis.moveToPoint(-33, -60, 1000, {.minSpeed = 100});
 
   // index
   chassis.waitUntilDone();

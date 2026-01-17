@@ -99,7 +99,7 @@ void EndEffector::set_volts(int voltage) {
 void EndEffector::stop() { set_volts(0); }
 
 void EndEffector::run() {
-  bool manual_control = false;
+  bool manual_control = true;
   if (controller.get_digital(
           CONTROLLER_BUTTONS::ENDEFFECTOR::DISABLE_COLOR_SORTING)) {
     manual_control = true;
@@ -116,16 +116,9 @@ void EndEffector::run() {
                  CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_HIGH)) {
     score_L3();
 
-    if (!manual_control && eject_top) {
-      upper_motor.move(127);
-    }
   } else if (controller.get_digital(
                  CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID)) {
     score_L2();
-
-    if (!manual_control && eject_bottom) {
-      lower_motor.move(127);
-    }
   } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE)) {
     index();
   } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&

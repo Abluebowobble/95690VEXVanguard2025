@@ -96,15 +96,15 @@ ASSET(stra_txt)
  * from where it left off.
  */
 void autonomous() { 
-  lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
-  chassis.setPose(0, 0, 0);
-  if (PID_CONSTANTS::TEST_TYPE::TEST_ANGULAR) {
-    chassis.turnToHeading(180, 100000000);
-  } else {
-    chassis.moveToPose(0, 10, 0, 100000000);
-  }
+  // lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+  // chassis.setPose(0, 0, 0);
+  // if (PID_CONSTANTS::TEST_TYPE::TEST_ANGULAR) {
+  //   chassis.turnToHeading(180, 100000000);
+  // } else {
+  //   chassis.moveToPose(0, 10, 0, 100000000);
+  // }
   // subsystems.endeffector.manual_control = true;
-  // right_side_auto(); 
+  right_side_auto(); 
 }
 
 void snap_to_heading() {
@@ -192,43 +192,43 @@ void colour_debug() {
  */
 
 void opcontrol() {
-  autonomous();
-  // subsystems.lilWill.set_start();
+  // autonomous();
+  subsystems.lilWill.up();
 
   // colour_debug();
-  // subsystems.endeffector.stop_for_indexing = false;
+  subsystems.endeffector.stop_for_indexing = false;
 
-  // while (true) {
-  //   // Drivetrain control
-  //   subsystems.drivetrain.drive();
+  while (true) {
+    // Drivetrain control
+    subsystems.drivetrain.drive();
 
-  //   // EndEffector control
-  //   subsystems.endeffector.run();
+    // EndEffector control
+    subsystems.endeffector.run();
 
-  //   // intake control
-  //   subsystems.intake.run();
+    // intake control
+    subsystems.intake.run();
 
-  //   // Intake
-  //   subsystems.intake.run();
+    // Intake
+    subsystems.intake.run();
 
-  //   // lilwill
-  //   subsystems.lilWill.run();
+    // lilwill
+    subsystems.lilWill.run();
 
-  //   // wing
-  //   subsystems.wing.run();
+    // wing
+    subsystems.wing.run();
 
-  //   // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
-  //   //   simple_auton();
-  //   // }
+    // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
+    //   simple_auton();
+    // }
 
-  //   // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+    // if (globals::controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 
-  //   //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+    //   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
 
-  //   //   chassis.setPose(0, 0, 0);
-  //   //   chassis.follow(stra_txt, 15, 1000000);
-  //   // }
+    //   chassis.setPose(0, 0, 0);
+    //   chassis.follow(stra_txt, 15, 1000000);
+    // }
 
-  //   pros::delay(20);
-  // }
+    pros::delay(20);
+  }
 }

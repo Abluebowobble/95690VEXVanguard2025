@@ -30,7 +30,8 @@ constexpr int L2_COLOR_SENSOR = 13;
 constexpr int L3_COLOR_SENSOR = 14;
 
 // pneumatics
-constexpr char WILL_PNEUMATIC = 'H'; // attached to both intake and hood, true extends hood
+constexpr char WILL_PNEUMATIC = 'E'; // attached to both intake and hood, true extends hood
+constexpr char HOOD_PNEUMATIC = 'H';
 constexpr char WING_PNEUAMTIC = 'F';
 constexpr char BASKET_PNEUMATIC = 'G';
 
@@ -96,14 +97,14 @@ constexpr double LOWER_BOUND = 210;
 namespace CONTROLLER_BUTTONS {
 
 namespace ENDEFFECTOR {
-constexpr auto SCORE_HIGH = pros::E_CONTROLLER_DIGITAL_L2;
-constexpr auto SCORE_MID = pros::E_CONTROLLER_DIGITAL_L1;
+constexpr auto SCORE_HIGH = pros::E_CONTROLLER_DIGITAL_L1;
+constexpr auto SCORE_MID = pros::E_CONTROLLER_DIGITAL_L2;
 constexpr auto DISABLE_COLOR_SORTING = pros::E_CONTROLLER_DIGITAL_B;
 } // namespace ENDEFFECTOR
 
 namespace LIL_WILL {
-constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_Y;
-constexpr auto START = pros::E_CONTROLLER_DIGITAL_DOWN;
+constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_DOWN;
+constexpr auto START = pros::E_CONTROLLER_DIGITAL_UP;
 } // namespace LIL_WILL
 
 namespace INTAKE {

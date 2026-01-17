@@ -6,7 +6,7 @@
 
 using namespace globals;
 
-LilWill::LilWill() : will_pneumatic(PORT_VALUES::WILL_PNEUMATIC, false, true) {}
+LilWill::LilWill() : will_pneumatic(PORT_VALUES::WILL_PNEUMATIC, false, false) {}
 
 void LilWill::toggle() { will_pneumatic.toggle(); }
 
@@ -15,7 +15,7 @@ void LilWill::down() { will_pneumatic.extend(); }
 void LilWill::up() { will_pneumatic.retract(); }
 
 void LilWill::run() {
-  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
+  if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
     will_pneumatic.toggle();
   }
 }
