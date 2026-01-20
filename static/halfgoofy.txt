@@ -1,0 +1,70 @@
+48.261, 15.342, 124.242
+47.261, 15.33, 123.946
+46.261, 15.326, 123.448
+45.261, 15.332, 123.078
+44.261, 15.347, 122.459
+43.261, 15.375, 121.761
+42.262, 15.417, 120.98
+41.264, 15.475, 119.808
+40.267, 15.552, 118.835
+39.272, 15.65, 117.435
+38.279, 15.773, 115.957
+37.291, 15.925, 114.474
+36.308, 16.11, 113.083
+35.333, 16.331, 111.66
+34.368, 16.592, 110.929
+33.415, 16.894, 110.703
+32.476, 17.238, 111.345
+31.552, 17.621, 112.827
+30.644, 18.039, 114.974
+29.749, 18.487, 117.518
+28.868, 18.958, 118.312
+28.113, 19.614, 116.712
+27.358, 20.27, 115.09
+26.603, 20.926, 113.445
+25.849, 21.582, 111.775
+25.094, 22.238, 110.08
+24.339, 22.894, 108.359
+23.584, 23.55, 106.61
+22.829, 24.206, 104.832
+22.075, 24.862, 103.023
+21.32, 25.518, 101.182
+20.565, 26.174, 99.306
+19.81, 26.83, 97.395
+19.321, 26.477, 96.223
+18.987, 25.534, 94.249
+18.654, 24.591, 92.233
+18.32, 23.649, 90.172
+17.986, 22.706, 88.062
+17.653, 21.763, 85.901
+17.319, 20.821, 83.684
+16.985, 19.878, 81.406
+16.651, 18.935, 79.063
+16.318, 17.993, 76.648
+15.984, 17.05, 74.155
+15.65, 16.107, 71.575
+15.317, 15.165, 68.898
+14.983, 14.222, 66.113
+14.649, 13.279, 63.206
+14.011, 13.092, 61.196
+13.118, 13.541, 58.043
+12.224, 13.989, 54.708
+11.33, 14.438, 51.157
+10.436, 14.886, 47.339
+9.542, 15.335, 43.186
+8.649, 15.783, 38.588
+7.755, 16.232, 33.362
+6.861, 16.68, 27.148
+5.967, 17.129, 19
+5.395, 17.416, 0
+5.395, 17.416, 0
+-12.48, 26.387, 0
+endData
+188
+127
+200
+48.261, 15.342, 37.546, 15.174, 33.665, 16.334, 28.872, 18.954
+28.872, 18.954, 24.202, 23.013, 24.202, 23.013, 19.532, 27.072
+19.532, 27.072, 17.014, 19.96, 17.014, 19.96, 14.497, 12.848
+14.497, 12.848, 9.946, 15.132, 9.946, 15.132, 5.395, 17.416
+#PATH.JERRYIO-DATA {"appVersion":"0.10.0","format":"LemLib v0.5","gc":{"robotWidth":14,"robotHeight":18,"robotIsHolonomic":false,"showRobot":true,"uol":2.54,"pointDensity":1,"controlMagnetDistance":1.968503937007874,"fieldImage":{"displayName":"V5RC 2026 - Push Back","signature":"V5RC-PushBack-H2H-TopDownHighlighted-TileColor66_71","origin":{"__type":"built-in"}},"coordinateSystem":"VEX Gaming Positioning System"},"paths":[{"segments":[{"controls":[{"uid":"35Cq6KoADa","x":48.26066734590974,"y":15.34239197506121,"lock":false,"visible":true,"heading":270,"__type":"end-point"},{"uid":"3x5DVgO51b","x":37.54555344587115,"y":15.17359520327006,"lock":false,"visible":true,"__type":"control"},{"uid":"zTGrp012ep","x":33.665235712615214,"y":16.33358427146519,"lock":false,"visible":true,"__type":"control"},{"uid":"t3vk7HS8J0","x":28.872259382818932,"y":18.95426184613897,"lock":false,"visible":true,"heading":310,"__type":"end-point"}],"speedProfiles":[],"lookaheadKeyframes":[],"uid":"o4E5wZu0hh"},{"controls":[{"uid":"t3vk7HS8J0","x":28.872259382818932,"y":18.95426184613897,"lock":false,"visible":true,"heading":310,"__type":"end-point"},{"uid":"Xf0YHgUJrP","x":19.531788853378085,"y":27.071575520534005,"lock":false,"visible":true,"heading":310,"__type":"end-point"}],"speedProfiles":[{"uid":"wrDmxELOxr","xPos":0.23076923076923078,"yPos":1,"followBentRate":true}],"lookaheadKeyframes":[],"uid":"sjlrBqZz3f"},{"controls":[{"uid":"Xf0YHgUJrP","x":19.531788853378085,"y":27.071575520534005,"lock":false,"visible":true,"heading":310,"__type":"end-point"},{"uid":"0ZeaTPVxTC","x":14.496558953260495,"y":12.848411842512535,"lock":false,"visible":true,"heading":45,"__type":"end-point"}],"speedProfiles":[],"lookaheadKeyframes":[],"uid":"IfmTH3bnd8"},{"controls":[{"uid":"0ZeaTPVxTC","x":14.496558953260495,"y":12.848411842512535,"lock":false,"visible":true,"heading":45,"__type":"end-point"},{"uid":"A2KtuOYoJh","x":5.3950839176451755,"y":17.4161897774973,"lock":false,"visible":true,"heading":330,"__type":"end-point"}],"speedProfiles":[],"lookaheadKeyframes":[],"uid":"CcscMk1Qns"}],"pc":{"speedLimit":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":127,"label":"127"},"step":1,"from":19,"to":127},"bentRateApplicableRange":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":1,"label":"1"},"step":0.001,"from":0,"to":0.115},"maxDecelerationRate":188},"name":"Path","uid":"KgJCWZVMrA","lock":false,"visible":true}]}
