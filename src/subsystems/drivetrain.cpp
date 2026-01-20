@@ -246,17 +246,17 @@ void Drivetrain::drive() {
       pros::E_CONTROLLER_ANALOG_RIGHT_X); // Left/right turn
 
 
-  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
-    if (limiter) {
+  // if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {
+  //   if (limiter) {
 
-      limiter = false;
-    } else {
-      limiter = true;
-    }
-  }
+  //     limiter = false;
+  //   } else {
+  //     limiter = true;
+  //   }
+  // }
 
-  if (limiter)
-    throttle *= 0.5;
+  // if (limiter)
+  //   throttle *= 0.5;
 
   chassis.arcade(throttle, turn, false, OPERATOR_CONSTANTS::DESATURATE_BIAS);
 }

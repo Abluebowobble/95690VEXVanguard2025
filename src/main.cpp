@@ -208,9 +208,6 @@ void opcontrol() {
     // intake control
     subsystems.intake.run();
 
-    // Intake
-    subsystems.intake.run();
-
     // lilwill
     subsystems.lilWill.run();
 

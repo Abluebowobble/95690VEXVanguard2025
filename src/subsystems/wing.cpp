@@ -8,7 +8,7 @@
 using namespace globals;
 
 Wing::Wing()
-    : wing_pneumatic(PORT_VALUES::WING_PNEUAMTIC, false)
+    : wing_pneumatic(PORT_VALUES::WING_PNEUAMTIC, false, true)
       {}
 
 void Wing::toggle() {
@@ -16,7 +16,7 @@ void Wing::toggle() {
 }
 
 void Wing::run() {
-  if (controller.get_digital_new_press(CONTROLLER_BUTTONS::WING::TOGGLE)) {
+  if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
     toggle();
   }
 }

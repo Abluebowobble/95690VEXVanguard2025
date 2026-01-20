@@ -6,7 +6,7 @@
 
 using namespace globals;
 
-Hood::Hood() : hood_pneumatic(PORT_VALUES::HOOD_PNEUMATIC, false, false) {}
+Hood::Hood() : hood_pneumatic(PORT_VALUES::HOOD_PNEUMATIC, true, true) {}
 
 void Hood::toggle() { hood_pneumatic.toggle(); }
 
