@@ -190,35 +190,31 @@ void Drivetrain::init() {
   leftMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
   rightMotorGroup.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
 
-  // Create background task for real-time position display on brain LCDd
-  // Lambda capture [&] allows access to chassis and imu1 members
-  // pros::Task screenTask([&]() {
-  //   pros::delay(10);
-  //   while (true) {
-  //     // Get current robot pose from odometry system
-  //     lemlib::Pose pose = chassis.getPose();
+  // Create background task for real-time position display on brain LCD
+  // Lambda capture [&] allows access to chassis and imus1 members
+  pros::Task screenTask([&]() {
+    pros::delay(10);
+    while (true) {
+      // Get current robot pose from odometry system
+      lemlib::Pose pose = chassis.getPose();
 
-  //     // Display position and status on brain LCD (5 lines)
-  //     pros::lcd::print(0, "X: %f", pose.x);                    // X position
-  //     (inches) pros::lcd::print(1, "Y: %f", pose.y);                    // Y
-  //     position (inches) pros::lcd::print(2, "Theta: %f", pose.theta); //
-  //     Heading (degrees) pros::lcd::print(3, "IMU1: %f", imu1.get_heading());
-  //     // Primary IMU heading
-  //     // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary
-  //     IMU heading pros::lcd::print(5, "vert rot: %i",
-  //     verticalRotationSensor.get_position()); // Secondary IMU heading
-  //     pros::lcd::print(6, "hortizontal rot: %i",
-  //     horizontalRotationSensor.get_position()); // Secondary IMU heading
+      // Display position and status on brain LCD (5 lines)
+      pros::lcd::print(0, "X: %f", pose.x);                    // X position (inches)
+      pros::lcd::print(1, "Y: %f", pose.y);                    // Y position (inches)
+      pros::lcd::print(2, "Theta: %f", pose.theta);            // Heading (degrees)
+      pros::lcd::print(3, "IMU1: %f", imu1.get_heading());     // Primary IMU heading
+      // pros::lcd::print(4, "IMU2: %f", imu2.get_heading()); // Secondary IMU heading
+      pros::lcd::print(5, "vert rot: %i", verticalRotationSensor.get_position());       // Secondary IMU heading
+      pros::lcd::print(6, "hortizontal rot: %i", horizontalRotationSensor.get_position()); // Secondary IMU heading
 
-  //     // Log position data to LemLib telemetry system (for
-  //     graphing/debugging) lemlib::telemetrySink()->info("Chassis pose: x: %f,
-  //     y: %f, theta: %f",
-  //                                   pose.x, pose.y, pose.theta);
+      // Log position data to LemLib telemetry system (for graphing/debugging)
+      lemlib::telemetrySink()->info("Chassis pose: x: %f, y: %f, theta: %f",
+                                    pose.x, pose.y, pose.theta);
 
-  //     // Update every 50ms (20Hz refresh rate) to balance responsiveness and
-  //     CPU usage pros::delay(50);
-  //   }
-  // });
+      // Update every 50ms (20Hz refresh rate) to balance responsiveness and CPU usage
+      pros::delay(50);
+    }
+  });
 }
 
 /**
@@ -241,9 +237,10 @@ void Drivetrain::init() {
 void Drivetrain::drive() {
   // Read joystick values from controller (-127 to +127)
   int throttle = controller.get_analog(
-      pros::E_CONTROLLER_ANALOG_LEFT_Y); // Forward/backward
-  int turn = controller.get_analog(
-      pros::E_CONTROLLER_ANALOG_RIGHT_X); // Left/right turn
+      pros::E_CONTROLLER_ANALOG_LEFT_Y); // Left/right turn
+
+    int turn = controller.get_analog( // Forward/backward
+      pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
 
   // if (controller.get_digital_new_press(CONTROLLER_BUTTONS::LIL_WILL::TOGGLE)) {

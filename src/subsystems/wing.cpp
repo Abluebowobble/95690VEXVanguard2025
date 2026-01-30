@@ -1,14 +1,13 @@
-#include "subsystems/lil_will.hpp"
+#include "subsystems/wing.hpp"
 #include "constants.hpp"
 #include "globals.hpp"
 #include "lemlib/api.hpp" // IWYU pragma: keep∏
 #include "pros/misc.h"
-#include "subsystems/wing.hpp"
 
 using namespace globals;
 
 Wing::Wing()
-    : wing_pneumatic(PORT_VALUES::WING_PNEUAMTIC, false, true)
+    : wing_pneumatic(PORT_VALUES::WING_PNEUAMTIC, false, false)
       {}
 
 void Wing::toggle() {

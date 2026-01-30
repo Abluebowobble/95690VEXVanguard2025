@@ -32,7 +32,7 @@ constexpr int L3_COLOR_SENSOR = 14;
 // pneumatics
 constexpr char WILL_PNEUMATIC = 'H'; // attached to both intake and hood, true extends hood
 constexpr char HOOD_PNEUMATIC = 'E';
-constexpr char WING_PNEUAMTIC = 'H';
+constexpr char WING_PNEUAMTIC = 'F';
 constexpr char BASKET_PNEUMATIC = 'G';
 
 } // namespace PORT_VALUES

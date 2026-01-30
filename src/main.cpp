@@ -81,6 +81,8 @@ void competition_initialize() {
 // Forward declaration of autonomous routines defined in autons.cpp
 void right_side_auto();
 void left_side_auto();
+void test();
+void skills_auto();
 
 ASSET(stra_txt)
 
@@ -104,7 +106,7 @@ void autonomous() {
   //   chassis.moveToPose(0, 10, 0, 100000000);
   // }
   // subsystems.endeffector.manual_control = true;
-  right_side_auto(); 
+  skills_auto(); 
 }
 
 void snap_to_heading() {
