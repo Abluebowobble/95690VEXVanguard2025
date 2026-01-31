@@ -56,7 +56,7 @@ void Autonomous::AutonSwitcher(int autonNum) {
     Autonomous::autonName = "Red Positive Sweep";
     Autonomous::auton = RED_POS;
     break;
-  case 3:
+  case 3:;
     Autonomous::autonName = "Red Positive Late Rush";
     Autonomous::auton = RED_POS_LATE_RUSH;
     break;
@@ -102,15 +102,15 @@ void right_side_auto() {
   // chassis.turnToHeading(-41, 1000);
 
   // turn to match loader
-  chassis.turnToHeading(132, 1500);
+  chassis.turnToHeading(136, 1500);
 
   // go to ml
   subsystems.lilWill.will_pneumatic.extend();
-  chassis.moveToPoint(34, -9, 2000);
+  chassis.moveToPoint(35, -9, 2000);
   chassis.turnToHeading(180, 1000);
 
   // do this together hopefully, run in to match loader
-  chassis.moveToPoint(34, -60, 1000, {.minSpeed = 110});
+  chassis.moveToPoint(35, -60, 1000, {.minSpeed = 110});
   chassis.waitUntilDone();
   pros::delay(1000);
   subsystems.endeffector.index();
@@ -121,18 +121,19 @@ void right_side_auto() {
   pros::delay(50);
 
   // ml delay
-  pros::delay(1000);
+  pros::delay(700);
   
   // score, chassis timeout delay
-  chassis.moveToPoint(39, 70, 10000, {.forwards = false, .maxSpeed = 90});
+  chassis.moveToPoint(43, 70, 10000, {.forwards = false, .maxSpeed = 90});
 
   // set up hood
   chassis.waitUntil(3);
   subsystems.lilWill.will_pneumatic.retract();
-  pros::delay(500);
+  pros::delay(250);
   subsystems.endeffector.score_L3();
-  chassis.moveToPoint(41, 70, 5000, {.forwards = false, .maxSpeed = 70});
+  chassis.moveToPoint(43, 70, 5000, {.forwards = false, .maxSpeed = 70});
   subsystems.intake.intake();
+  subsystems.endeffector.score_L3();
 
   // chassis.moveToPoint(9, 9, 10000, {.forwards = true, .minSpeed = 80});
 }

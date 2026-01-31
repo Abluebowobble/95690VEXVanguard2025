@@ -52,7 +52,7 @@ bool EndEffector::should_eject_L3() {
 }
 
 globals::SensorColors EndEffector::get_L2_color() { return L2_color; }
-
+  
 globals::SensorColors EndEffector::get_L3_color() { return L3_color; }
 
 double EndEffector::get_L2_hue() { return L2_color_sensor.get_hue(); }
@@ -60,6 +60,7 @@ double EndEffector::get_L2_hue() { return L2_color_sensor.get_hue(); }
 double EndEffector::get_L3_hue() { return L3_color_sensor.get_hue(); }
 
 void EndEffector::index() {
+  bool stop_for_indexing = false;
   if (L3_color_sensor.get_proximity() > 100) {
     stop_for_indexing = true;
   }
