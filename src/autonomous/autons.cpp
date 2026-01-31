@@ -255,7 +255,7 @@ void left_side_auto() {
 
   // get first 3 balls
   subsystems.intake.intake();
-  chassis.moveToPoint(-8, 28, 5000, {.maxSpeed = 60}); // test
+  chassis.moveToPoint(-8, 28, 5000, {.maxSpeed = 60});
 
   chassis.waitUntil(20);
   subsystems.lilWill.will_pneumatic.extend();
@@ -269,31 +269,31 @@ void left_side_auto() {
   subsystems.lilWill.will_pneumatic.retract();
 
   // turn to middle goal
-  chassis.moveToPoint(-1, 23, 1000, {.forwards = false});
+  chassis.moveToPoint(-2, 23, 1000, {.forwards = false});
   chassis.turnToHeading(-135, 1000);
 
   // score
   chassis.waitUntilDone();
-  subsystems.endeffector.score_L2();
+  subsystems.endeffector.score_L3();
 
   // middle score time
   pros::delay(MIDDLE_SCORE_DELAY);
   subsystems.endeffector.stop();
 
   // go to ml
-  chassis.moveToPoint(-34, -9, 2000, {.forwards = false});
+  chassis.moveToPoint(-36, -9, 2000, {.forwards = false});
   chassis.waitUntilDone();
   subsystems.lilWill.will_pneumatic.extend();
   
-  chassis.turnToHeading(180, 1000);
+  chassis.turnToHeading(200, 1000);
 
   // do this together hopefully, run in to match loader
-  chassis.moveToPoint(-33, -60, 200, {.minSpeed = 90});
+  chassis.moveToPoint(-35, -60, 200, {.minSpeed = 90});
 
-  chassis.moveToPoint(-33, -60, 200, {.minSpeed = 90});
-  pros::delay(50);
-  chassis.moveToPoint(-33, -60, 200, {.minSpeed = 90});
-  pros::delay(50);
+  chassis.moveToPoint(-35, -60, 200, {.minSpeed = 90});
+  pros::delay(100);
+  chassis.moveToPoint(-35, -60, 200, {.minSpeed = 90});
+  pros::delay(100);
 
   // index
   chassis.waitUntilDone();
@@ -306,7 +306,7 @@ void left_side_auto() {
   pros::delay(MATCH_LOAD_DELAY);
   
   // score, chassis timeout delay
-  chassis.moveToPoint(-32, 70, 700,
+  chassis.moveToPoint(-35, 70, 700,
                       {.forwards = false, .maxSpeed = 100});
 
   // set up hood
