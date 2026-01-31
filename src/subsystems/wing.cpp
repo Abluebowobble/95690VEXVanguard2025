@@ -15,7 +15,7 @@ void Wing::toggle() {
 }
 
 void Wing::run() {
-  if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+  if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
     toggle();
   }
 }

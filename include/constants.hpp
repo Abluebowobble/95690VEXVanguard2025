@@ -103,7 +103,7 @@ constexpr auto DISABLE_COLOR_SORTING = pros::E_CONTROLLER_DIGITAL_B;
 } // namespace ENDEFFECTOR
 
 namespace LIL_WILL {
-constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_DOWN;
+constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_RIGHT;
 constexpr auto START = pros::E_CONTROLLER_DIGITAL_UP;
 } // namespace LIL_WILL
 
@@ -115,7 +115,7 @@ constexpr auto ANTI_JAM = pros::E_CONTROLLER_DIGITAL_X;
 } // namespace INTAKE
 
 namespace WING {
-constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_A;
+constexpr auto TOGGLE = pros::E_CONTROLLER_DIGITAL_Y;
 }
 } // namespace CONTROLLER_BUTTONS
 
