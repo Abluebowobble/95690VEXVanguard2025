@@ -99,10 +99,9 @@ void EndEffector::set_volts(int voltage) {
 void EndEffector::stop() { set_volts(0); }
 
 void EndEffector::run() {
-  bool manual_control = true;
   if (controller.get_digital(
           CONTROLLER_BUTTONS::ENDEFFECTOR::DISABLE_COLOR_SORTING)) {
-    manual_control = true;
+    manual_control = false;
   } else {
     eject_bottom = should_eject_L2();
     eject_top = should_eject_L3();

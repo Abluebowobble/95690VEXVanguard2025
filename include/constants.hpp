@@ -22,7 +22,7 @@ constexpr int LOWER_ENDEFFECTOR_MOTOR_PORT = 19;
 // odometry
 constexpr int HORIZONTAL_ROTATION_SENSOR = 16;
 constexpr int VERTICAL_ROTATION_SENSOR = 6;
-constexpr int IMU_1 = 0; // newest
+constexpr int IMU_1 = 12; // newest
 // constexpr int IMU_2 = 11; // Second IMU port, old
 
 // sensors

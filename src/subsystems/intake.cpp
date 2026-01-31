@@ -31,8 +31,11 @@ void Intake::stop() { set_volts(0); }
 
 void Intake::run() {
 
-  // outtake
-  if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
+  if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
+             controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
+    intake();
+  }
+  else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
     outtake();
   } // intake
   else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) ||
@@ -40,12 +43,8 @@ void Intake::run() {
                CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_HIGH) ||
            controller.get_digital(CONTROLLER_BUTTONS::ENDEFFECTOR::SCORE_MID)) {
     intake();
-  } else if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
-             controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE)) {
-    intake();
   } else
     stop();
-
   if (controller.get_digital(CONTROLLER_BUTTONS::INTAKE::INTAKE) &&
              controller.get_digital(CONTROLLER_BUTTONS::INTAKE::OUTTAKE))
     basket_pneumatic.retract();
