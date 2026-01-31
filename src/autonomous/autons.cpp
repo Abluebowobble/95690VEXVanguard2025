@@ -129,9 +129,9 @@ void right_side_auto() {
   // set up hood
   chassis.waitUntil(3);
   subsystems.lilWill.will_pneumatic.retract();
+  pros::delay(500);
   subsystems.endeffector.score_L3();
-  chassis.moveToPoint(39, 70, 5000, {.forwards = false, .maxSpeed = 70});
-
+  chassis.moveToPoint(41, 70, 5000, {.forwards = false, .maxSpeed = 70});
   subsystems.intake.intake();
 
   // chassis.moveToPoint(9, 9, 10000, {.forwards = true, .minSpeed = 80});
