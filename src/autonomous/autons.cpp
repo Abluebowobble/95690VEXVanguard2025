@@ -138,6 +138,21 @@ void right_side_auto() {
   // chassis.moveToPoint(9, 9, 10000, {.forwards = true, .minSpeed = 80});
 }
 
+void move_forwards() {
+  lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
+
+  subsystems.intake.intake();
+
+  chassis.setPose(0, 0, 0);
+  subsystems.drivetrain.get_left_motors().move(127);
+  subsystems.drivetrain.get_right_motors().move(127);
+  pros::delay(2000);
+
+
+  subsystems.drivetrain.get_left_motors().move(0);
+  subsystems.drivetrain.get_right_motors().move(0);
+}
+
 void test() {
   lemlib::Chassis &chassis = subsystems.drivetrain.get_chassis();
 

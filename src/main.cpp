@@ -83,6 +83,7 @@ void right_side_auto();
 void left_side_auto();
 void test();
 void skills_auto();
+void move_forwards();
 
 ASSET(stra_txt)
 
