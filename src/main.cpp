@@ -106,7 +106,7 @@ void autonomous() {
   //   chassis.moveToPose(0, 10, 0, 100000000);
   // }
   // subsystems.endeffector.manual_control = true;
-  left_side_auto(); 
+  right_side_auto(); 
 }
 
 void snap_to_heading() {
